@@ -1,0 +1,61 @@
+package com.test.controller;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+import com.test.service.CustomerServiceInt;
+import com.test.tarun.BillingAddress;
+import com.test.tarun.Cart;
+import com.test.tarun.Customer;
+import com.test.tarun.ShippingAddress;
+import com.test.tarun.UserDetails;
+
+@Controller
+public class CustomerController {
+
+	
+	@Autowired
+	private CustomerServiceInt customerService;
+	
+	@RequestMapping("/reqStudentSpring")
+	public String displaySignupForm(Model m){
+		UserDetails ud = new UserDetails();
+		ShippingAddress sad = new ShippingAddress();
+		Customer cust = new Customer();
+		cust.setUserDetails(ud);
+		cust.setShippingAddress(sad);
+		m.addAttribute("customer",cust);
+		return "studentspringf";
+	}
+	
+	@RequestMapping("/reqSendSignupData")
+	public String sendSignUpData(@ModelAttribute("customer")Customer cust,Model m){
+		
+		cust.setEnabled(true);
+		cust.getUserDetails().setRole("ROLE_USER");
+		cust.getUserDetails().setEnabled(true);
+		
+		BillingAddress bad = new BillingAddress();
+		bad.setHouseno(cust.getShippingAddress().getHouseno());
+		bad.setStreet(cust.getShippingAddress().getStreet());
+		bad.setArea(cust.getShippingAddress().getArea());
+		bad.setCity(cust.getShippingAddress().getCity());
+		bad.setState(cust.getShippingAddress().getState());
+		bad.setCountry(cust.getShippingAddress().getCountry());
+		bad.setPincode(cust.getShippingAddress().getPincode());
+		
+		Cart crt = new Cart();		
+		
+		cust.setBillingAddress(bad);
+		cust.setCart(crt);
+		
+		String userid=customerService.addCustomer(cust);
+		String message="Signup is successfull.\nNew User id : "+userid;
+		m.addAttribute("signupmsg", message);
+		m.addAttribute("userObject", new UserDetails());
+		return "loginpage";
+	}
+
+}

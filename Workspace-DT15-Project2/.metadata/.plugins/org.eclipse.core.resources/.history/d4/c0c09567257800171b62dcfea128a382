@@ -1,0 +1,11 @@
+package com.test.dao;
+
+import com.test.tarun.Customer;
+
+public interface CustomerDAOInt {
+
+	public String addCustomer(Customer cust);
+	public Customer getCustomerByUserId(String uid);
+	public List<Vw_Prod_Supp_Xps> getProductsForUser();
+
+}

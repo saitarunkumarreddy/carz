@@ -1,0 +1,31 @@
+package com.test.controller;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+import com.test.service.XmapServiceInt;
+import com.test.tarun.Xmap;
+
+@Controller
+public class XmapController {
+	
+	@Autowired
+	private XmapServiceInt xmapService;
+
+	
+	@RequestMapping("/reqAddXmapForm")
+	public String addxmapform(Model m){
+		m.addAttribute("xmapobject",new Xmap());
+		return "addXmap";
+}
+	@RequestMapping("/reqaddxmap")
+	public String addxmap(@ModelAttribute("xmapdata"),Xmap xm)
+	{
+		xm.setXmapavailable(true);
+		xmapService.addXmap(xm);
+		return "adminHomePage1";
+	}
+}
+}

@@ -1,0 +1,19 @@
+package com.test.service;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.test.dao.CustomerDAOInt;
+import com.test.tarun.Customer;
+
+@Service
+public class CustomerServiceImpl implements CustomerServiceInt{
+
+	@Autowired
+	private CustomerDAOInt customerDao;
+	
+	public String addCustomer(Customer cust) {		
+		return customerDao.addCustomer(cust);
+	}
+
+}

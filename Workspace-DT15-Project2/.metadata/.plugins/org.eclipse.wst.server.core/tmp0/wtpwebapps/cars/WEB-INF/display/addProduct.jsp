@@ -1,0 +1,46 @@
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+    pageEncoding="ISO-8859-1"%>
+    <%@ taglib uri="http://www.springframework.org/tags/form" prefix="xyz"%>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<%@ include file="links.jsp" %>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<title>Insert title here</title>
+<style>
+body {
+    background-color: black;
+    }
+</style>
+</head>
+<body>
+<%@ include file="adminNavBar.jsp" %>
+
+<br>
+<br>
+<br>
+<div class="container">
+<div class="col-sm-6" style="background-color:yellow; border-radius:20px; padding-bottom:15px; padding-top:5px">
+<div align="center" >
+<b>product data</b>
+</div>
+<xyz:form commandName="productobject" action="reqaddproduct" enctype="multipart/form-data">
+
+<div class="form-group">
+<label for="prd">productname:</label>
+<br> <xyz:input class="form-control" placeholder="enter productname" path="productname" name="prd" style="width:400px"/>
+</div>
+
+<div class="form-group">
+<label for="no.">productdesc.:</label>
+<br> <xyz:input class="form-control" placeholder="enter product no." path="productdesc" name="no." style="width:400px"/>
+</div>
+<div class="form-group">
+<br>Browse Image <xyz:input type="file" path="productImage"/>
+</div>
+<br><xyz:button class="btn btn-primary">check</xyz:button>
+</xyz:form>
+</div>
+</div>
+</body>
+</html>
