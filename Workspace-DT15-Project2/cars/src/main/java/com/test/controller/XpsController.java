@@ -46,7 +46,7 @@ public class XpsController {
 		m.addAttribute("products", prdata);
 		m.addAttribute("suppliers", supdata);
 		m.addAttribute("prodsuppObject", new XMAP_Product_Supplier());
-		return "addProdSupp";
+		return "addProductsSuppliers";
 	}
 	
 	@RequestMapping("/reqAddProdSuppDataToDb")

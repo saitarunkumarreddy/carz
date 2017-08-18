@@ -1,5 +1,7 @@
 package com.test.tarun;
 
+import java.io.Serializable;
+
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.OneToOne;
@@ -7,7 +9,7 @@ import javax.persistence.OneToOne;
 
 
 @Entity
-public class ShippingAddress {
+public class ShippingAddress implements Serializable {
 
 	
 	@Id

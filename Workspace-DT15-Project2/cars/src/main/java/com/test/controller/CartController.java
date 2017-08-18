@@ -36,17 +36,17 @@ public class CartController {
 	@Autowired
 	private CartServiceInt cartService;
 	
-	@RequestMapping("/reqAddItemToCart/{psid}")
-	public String addItemToCart(@PathVariable("psid")String psid, @RequestParam("qty")int qty,HttpSession hsession,Model m){
-		System.out.println("psid : "+psid + "  qty : " + qty);
+	@RequestMapping("/reqAddItemToCart/{productsupplierid}")
+	public String addItemToCart(@PathVariable("productsupplierid")String productsupplierid, @RequestParam("quantity")int quantity,HttpSession hsession,Model m){
+		System.out.println("psid : "+productsupplierid + "  qty : " + quantity);
 		Customer cust = (Customer)hsession.getAttribute("customerprofile");
 		Cart cart = cust.getCart();
-		XMAP_Product_Supplier xps = xpsService.getXpsById(psid);
+		XMAP_Product_Supplier xps = xpsService.getXpsById(productsupplierid);
 		CartItem cartitem = new CartItem();
 		cartitem.setCart(cart);
 		cartitem.setXmap_product_supplier(xps);
-		cartitem.setQuantity(qty);
-		cartitem.setItemwisetotal(xps.getProductsupplierprice()*qty);
+		cartitem.setQuantity(quantity);
+		cartitem.setItemwisetotal(xps.getProductsupplierprice()*quantity);
 		
 		cartItemService.addCartItem(cartitem);
 		
@@ -64,16 +64,16 @@ public class CartController {
 		List <Vw_Prod_Supp_Xps> productsuser = customerService.getProductsForUser();	
 		m.addAttribute("productsuser", productsuser);
 		m.addAttribute("cartmessage","Item added to cart successfully..");
-		return "useHomePage";
+		return "userHomePage";
 	}
 
 	@RequestMapping("/reqDisplayCart")
 	public String displayCart(HttpSession hsession,Model m){
 		
-		Customer cust = (Customer)hsession.getAttribute("customerprofile");
-		Customer cust1 = customerService.getCustomerByID(cust.getCustomerid());
-		Cart cart = cust1.getCart();	
-		hsession.setAttribute("customerprofile",cust1);		
+		Customer customer = (Customer)hsession.getAttribute("customerprofile");
+		Customer customer1 = customerService.getCustomerByID(customer.getCustomerid());
+		Cart cart = customer1.getCart();	
+		hsession.setAttribute("customerprofile",customer1);		
 		
 		List<CartItem> cartitems = cart.getCartItems();	
 		int sum=0;
@@ -98,8 +98,8 @@ public class CartController {
 	@RequestMapping("/reqClearCart/{customerid}")
 	public String deleteAllCartItems(@PathVariable("customerid")String customerid,HttpSession hsession){
 		cartItemService.removeAllCartItems(customerid);		
-		Customer cust = (Customer)hsession.getAttribute("customerprofile");
-		hsession.setAttribute("customerprofile", customerService.getCustomerByID(cust.getCustomerid()));
+		Customer customer = (Customer)hsession.getAttribute("customerprofile");
+		hsession.setAttribute("customerprofile", customerService.getCustomerByID(customer.getCustomerid()));
 		return "redirect:/reqDisplayProductsUser";
 	}
 

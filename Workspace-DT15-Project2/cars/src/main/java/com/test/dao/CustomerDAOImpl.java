@@ -3,6 +3,7 @@ import java.io.File;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.List;
+import java.util.Random;
 
 import org.hibernate.Query;
 import org.hibernate.Session;
@@ -45,8 +46,13 @@ public class CustomerDAOImpl implements CustomerDAOInt{
 
 	public List<Vw_Prod_Supp_Xps> getProductsForUser() {
 		Session ses = sessionFactory.openSession();
+		int max,min;
+		min=1;
+		max=11;
+		Random r=new Random();
+		int val=r.nextInt((max-min)+1)+min;
 		//String qrs = "from Vw_Prod_Supp_Xps";
- 	String qrs = "FROM Vw_Prod_Supp_Xps x1 where productsupplierprice = (select min(productsupplierprice) from Vw_Prod_Supp_Xps x2 where x1.productid = x2.productid )";			
+ 	String qrs = "FROM Vw_Prod_Supp_Xps x1 where productsupplierprice = (select min(productsupplierprice) from Vw_Prod_Supp_Xps x2 where x1.productid = x2.productid ) order by " +val;			
  	Query qr = ses.createQuery(qrs);
 	List<Vw_Prod_Supp_Xps> data = qr.list();
 		ses.close();

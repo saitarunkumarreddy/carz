@@ -1,10 +1,12 @@
 package com.test.tarun;
+import java.io.Serializable;
+
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.OneToOne;
 
 @Entity
-public class BillingAddress {
+public class BillingAddress implements Serializable{
 
 	@Id
 	private String billingaddressid;

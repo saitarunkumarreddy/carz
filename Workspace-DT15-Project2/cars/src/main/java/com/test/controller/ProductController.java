@@ -43,21 +43,21 @@ public class ProductController {
 	}
 	
 	@RequestMapping("/reqDeleteProductAdmin")
-	public String deleteProductAdmin(@RequestParam("pid")String pid){
-		productService.deleteProduct(pid);
+	public String deleteProductAdmin(@RequestParam("pid")String productid){
+		productService.deleteProduct(productid);
 		return "redirect:reqDisplayProdcutsAdmin";
 		
 	}
 	@RequestMapping("/reqEditProductPageAdmin")
-	public String editProductPageAdmin(@RequestParam("pid")String pid,Model m){		
-		Product prd = productService.getProductbyId(pid);
+	public String editProductPageAdmin(@RequestParam("pid")String productid,Model m){		
+		Product prd = productService.getProductbyId(productid);
 		m.addAttribute("product",prd);
 		return "productEditAdmin";
 	}
 	
 	@RequestMapping("/reqSendUpdatedProductToDB")
-	public String updateProductToDB(@ModelAttribute("productObject")Product prd){
-		productService.updateProduct(prd);
+	public String updateProductToDataBase(@ModelAttribute("productObject")Product product){
+		productService.updateProduct(product);
 		return "redirect:reqDisplayProdcutsAdmin";
 	}
 

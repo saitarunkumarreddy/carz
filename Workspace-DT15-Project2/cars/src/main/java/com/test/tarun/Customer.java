@@ -1,5 +1,6 @@
 package com.test.tarun;
 
+import java.io.Serializable;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -20,7 +21,7 @@ import com.test.tarun.ShippingAddress;
 import com.test.tarun.UserDetails;
 
 @Entity
-public class Customer {
+public class Customer implements Serializable{
 
 	@Id
 	private String customerid;

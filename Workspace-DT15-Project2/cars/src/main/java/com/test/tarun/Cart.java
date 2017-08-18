@@ -1,4 +1,5 @@
 package com.test.tarun;
+import java.io.Serializable;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -10,7 +11,7 @@ import javax.persistence.OneToOne;
 
 @Entity
 
-public class Cart {
+public class Cart implements Serializable{
 
 	@Id
 	private String cartid;

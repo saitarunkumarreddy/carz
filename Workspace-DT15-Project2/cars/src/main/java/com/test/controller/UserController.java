@@ -33,7 +33,7 @@ public class UserController {
 	}
 	
 	@RequestMapping("/reqLoginPage")
-	public String loginPage(UserDetails ud, Model m) {
+	public String loginPage(UserDetails userdetails, Model m) {
 		m.addAttribute("userObject", new UserDetails());
 		return "loginpage";
 	}
