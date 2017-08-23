@@ -1,11 +1,14 @@
 package com.test.controller;
+import java.security.Principal;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
+import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -73,6 +76,37 @@ public class CustomerController {
 		m.addAttribute("userObject", new UserDetails());
 		return "loginpage";
 	}
+	@RequestMapping("/reqSendSignupData1") // with validation
+	public String sendSignUpData1(@Valid @ModelAttribute("customer") Customer customer, BindingResult result, Model m) {
+		if (result.hasErrors()) {
+			System.out.println("\nerror");
+			m.addAttribute("customer", customer);
+			return "signupform";
+		} 
+		customer.setEnabled(true);
+		customer.getUserDetails().setRole("ROLE_USER");
+		customer.getUserDetails().setEnabled(true);
+		
+		BillingAddress billingaddress = new BillingAddress();
+		billingaddress.setHouseno(customer.getShippingAddress().getHouseno());
+		billingaddress.setStreet(customer.getShippingAddress().getStreet());
+		billingaddress.setArea(customer.getShippingAddress().getArea());
+		billingaddress.setCity(customer.getShippingAddress().getCity());
+		billingaddress.setState(customer.getShippingAddress().getState());
+		billingaddress.setCountry(customer.getShippingAddress().getCountry());
+		billingaddress.setPincode(customer.getShippingAddress().getPincode());
+		
+		Cart cart = new Cart();		
+		
+		customer.setBillingAddress(billingaddress);
+		customer.setCart(cart);
+		
+		String userid=customerService.addCustomer(customer);
+		String message="Signup is successfull.\nNew User id : "+userid;
+		m.addAttribute("signupmsg", message);
+		m.addAttribute("userObject", new UserDetails());
+		return "loginpage";
+	}
 	@RequestMapping("/reqLoginCheck")
 	public String loginCheck(HttpSession hsession, @ModelAttribute("userObject") UserDetails userDetails, Model m) {
 
@@ -101,6 +135,25 @@ public class CustomerController {
 			return "adminHomePage1";
 		}
 		}
+	@RequestMapping("/springLoginCheck") // comes here after spring security authenticates user
+	public String loginCheck(Principal principal,HttpSession hsession,Model m){
+		System.out.print("\nCustomerController - springLoginCheck()");
+		System.out.println("\nName : " + principal.getName());
+		Customer customer = customerService.getCustomerByUserId(principal.getName());
+		UserDetails userDetials = customer.getUserDetails();
+		System.out.println("\nRole : " + userDetials.getRole());
+
+		if(userDetials.getRole().equals("ROLE_USER")){
+			hsession.setAttribute("customerprofile", customer);
+			return "redirect:/reqDisplayProductsUser";
+		}
+
+		if(userDetials.getRole().equals("ROLE_ADMIN")){
+			hsession.setAttribute("adminprofile", customer);
+			return "adminHomePage1";
+		}
+		return "";
+	}
 		@RequestMapping("/reqProductAllSuppliers")
 		public String getProductsAllSuppliers(@RequestParam("pid")String productid,Model m){
 			List<Vw_Prod_Supp_Xps> allSupProd = customerService.getAllSuppProd(productid);
@@ -129,5 +182,22 @@ public class CustomerController {
 				 m.addAttribute("message",logoutMessage);
 				return "index";
 		}
+		@RequestMapping("/reqLogoutSpring")  // spring security logout
+		public String logoutSpring(HttpSession hsession,Model m){
+			hsession.invalidate();
+			String logoutMessage = "Logged out succcessfully.\nThanks for visiting our site...";
+			m.addAttribute("message", logoutMessage);
+			return "index";
+		}
+
+		@RequestMapping("/reqLoginPage1")
+		public String loginPage1(@RequestParam(value="error", required=false)String error,Model m){
+			if(error!=null){
+				String message = "Login failed..,\nTry again...";
+				m.addAttribute("errormsg", message);
+			}
+			return "springSecurityLoginPage";
+		}
+
 }
 

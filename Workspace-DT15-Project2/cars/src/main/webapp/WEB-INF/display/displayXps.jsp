@@ -60,7 +60,7 @@ $(document).ready(function(){
 <td style="vertical-align: middle;font-weight:bold;">${xps.isproductsupplieravailable}</td>
 
 <td style="vertical-align: middle">
-<a href="reqEditXpsPage?sid=${xps.psid}" > 
+<a href="reqEditXpsPage?psid=${xps.psid}" > 
 <span class="glyphicon glyphicon-pencil btn btn-warning btn-large"></span>
 </a>
 <a href="reqDeleteXps?psid=${xps.psid}"> 

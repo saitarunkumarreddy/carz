@@ -11,7 +11,7 @@
     </ul>
      <ul class="nav navbar-nav navbar-right">
       <li><a href="reqStudentSpring"><span class="glyphicon glyphicon-user"></span>signup</a></li>
-      <li><a href="reqLoginPage"><span class="glyphicon glyphicon-log-in"></span>login</a></li>
+      <li><a href="reqLoginPage1"><span class="glyphicon glyphicon-log-in"></span>login</a></li>
       </ul>
   </div>
 </nav>

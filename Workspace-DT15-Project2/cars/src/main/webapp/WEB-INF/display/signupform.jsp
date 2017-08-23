@@ -37,14 +37,17 @@
 
 
 
-			<xyz:form commandName="customer" action="reqSendSignupData"
+			<xyz:form modelAttribute="customer"  action="reqSendSignupData1"
 				enctype="multipart/form-data">
 
 				<div class="form-group">
 					<b> Enter Customer Name </b> <br>
 					<xyz:input class="form-control" placeholder="Enter Customer Name"
 						path="customername" />
+						<xyz:errors path="customername"> 
+						</xyz:errors>
 				</div>
+				
 				
 				<div class="form-group">
 					<b> Enter Customer E-Mail ID </b> <br>
@@ -120,10 +123,10 @@
 
 		<div class="col-sm-6">
 
-			<img src="resources/images/products/all1.jpg" height="250px"
+			<img src="resources/images/products/car1.jpg" height="250px"
 				width="100%" />
 			<br>
-			<img src="resources/images/products/all2.jpg" height="250px"
+			<img src="resources/images/products/cars.jpg" height="250px"
 				width="100%" />
 
 		</div>

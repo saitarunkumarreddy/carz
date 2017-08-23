@@ -4,7 +4,7 @@
 	
 	
 		<ul class="nav navbar-nav" >
-			<li><img src="resources/images/users/${userid}.jpg" height="50"
+			<li><img src="resources/images/users/Deserts${userid}.jpg" height="50"
 				width="60" class="img-circle" /></li>
 			<li class="dropdown"><a class="dropdown-toggle"
 				data-toggle="dropdown" href="#"> Welcome ${username}<span
@@ -12,7 +12,7 @@
 				<ul class="dropdown-menu" style="vertical-align: middle">
 					<li><a href="#">Edit Profile</a></li>
 					<li><a href="#">Change Password</a></li>
-					<li><a href="#">Logout</a></li>
+					<li><a href="j_spring_security_logout">Logout</a></li>
 				</ul>
 			</li>
 

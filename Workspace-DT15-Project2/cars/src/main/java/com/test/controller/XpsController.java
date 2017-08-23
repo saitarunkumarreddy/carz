@@ -68,5 +68,26 @@ public class XpsController {
 		m.addAttribute("xpsdata", data);
 		return "displayXps";
 	}
+	
+	@RequestMapping("/reqEditXpsPage")
+	public String editXPSPage(@RequestParam("psid")String psid,Model m){
+		XMAP_Product_Supplier xps = xpsService.getXpsById(psid);	
+		String pname  = productService.getProductbyId(xps.getProductid()).getProductname();
+		String supname = supplierService.getSupplierbyId(xps.getSupplierid()).getSuppliername();
+		
+		m.addAttribute("xps", xps);	
+		m.addAttribute("pname", pname);	
+		m.addAttribute("supname", supname);	
+		
+		return "editXps";
+	}
+	
+	@RequestMapping("/reqEditXpsToDB")
+	public String editXPStoDB(@ModelAttribute("prodsuppObject")XMAP_Product_Supplier xps){
+		xpsService.editXps(xps);			
+		return "redirect:/reqDisplayXps";
+	}
+	
+
 
 }
